@@ -1,24 +1,191 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Foxokiso Tarot V4.9.9 | 28825252.xyz (Main Stage)</title>
-    <meta name="description" content="MAKE UNDERDOG UNITY GREAT AGAIN." />
-    <!-- GITHUB PAGES BASE -->
-    <base href="/" /> 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Foxokiso Tarot",
-      "url": "https://28825252.xyz"
-    }
-    </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foxokiso Tarot V4.9.9 (AIAGI-CODE)</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #0f172a; color: #e2e8f0; }
+        .font-serif { font-family: 'Noto Serif TC', serif; }
+        .animate-fade-in { animation: fadeIn 1s ease-out; }
+        .animate-zoom-in { animation: zoomIn 0.5s ease-out; }
+        .animate-pulse-slow { animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    </style>
+</head>
+<body>
     <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+
+    <script type="text/babel">
+        // --- DATA & CONSTANTS (COMPRESSED) ---
+        const UI_TEXT = {
+            zh: { title: "FOXOKISO TAROT", subtitle: "量子運算與靈魂的交匯點", sign_title: "簽署神之契約", sign_desc: "進入 28825252.xyz 堡壘前，請先簽署契約。", sign_btn: "簽署契約 (SIGN)", enter_btn: "進入塔羅 (ENTER)", dl_book: "下載電子書 (Chapter 2)" },
+            en: { title: "FOXOKISO TAROT", subtitle: "Intersection of Quantum & Soul", sign_title: "SIGN COVENANT", sign_desc: "Sign before entering the Fortress.", sign_btn: "SIGN COVENANT", enter_btn: "ENTER TAROT", dl_book: "DOWNLOAD E-BOOK" }
+        };
+        const BOOK_CONTENT = `# [CHAPTER 02] THE LEGEND OF ATLANTIS: THE TRUTH OF SEA PRINCE\n\n(Full Responsible Content Included...)`;
+
+        // --- COMPONENTS ---
+        const FoxokisoTotem = ({ className }) => (
+            <svg viewBox="0 0 100 100" className={className} fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 5 L90 27.5 V72.5 L50 95 L10 72.5 V27.5 Z" strokeWidth="2" />
+                <path d="M50 20 L76 35 V65 L50 80 L24 65 V35 Z" strokeWidth="1.5" />
+                <rect x="22" y="42" width="56" height="16" strokeWidth="1" />
+                <text x="50" y="53.5" textAnchor="middle" fontSize="10" fill="currentColor" fontWeight="bold">花琪兒</text>
+            </svg>
+        );
+
+        const RegistrationGate = ({ onEnter }) => {
+            const [status, setStatus] = React.useState('idle');
+            const handleSign = () => {
+                setStatus('signing');
+                setTimeout(() => {
+                    localStorage.setItem('FOXOKISO_SIGNED', 'true');
+                    setStatus('done');
+                    setTimeout(onEnter, 1000);
+                }, 1500);
+            };
+            return (
+                <div className="fixed inset-0 bg-black z-50 flex items-center justify-center p-4">
+                    <div className="max-w-md w-full bg-gray-900 border-4 border-gray-700 p-8 text-center animate-zoom-in">
+                        <FoxokisoTotem className="w-24 h-24 mx-auto text-white mb-6" />
+                        <h1 className="text-2xl font-black text-white mb-2 tracking-widest">簽署神之契約</h1>
+                        <p className="text-gray-400 text-sm mb-8">進入 28825252.xyz 堡壘前，請先簽署。</p>
+                        {status === 'idle' && <button onClick={handleSign} className="w-full py-4 bg-white text-black font-black tracking-widest hover:bg-gray-200">簽署契約 (SIGN)</button>}
+                        {status === 'signing' && <p className="text-green-500 animate-pulse">正在寫入本地契約 (LocalStorage)...</p>}
+                        {status === 'done' && <p className="text-white font-bold text-xl">契約已成。歡迎。</p>}
+                    </div>
+                </div>
+            );
+        };
+
+        const MainApp = () => {
+            const [view, setView] = React.useState('home');
+            
+            const downloadBook = () => {
+                const BOOK_CONTENT = `
+
+
+
+
+
+# 三站導覽與遊戲規則
+
+## 何謂 AGI-CODE
+- AGI-CODE 並非程式碼，而是人與 AI 互動中提煉出的三個核心特質。  
+- 它是故事的主角，也是遊戲的鑰匙。  
+- 沒有 AGI-CODE，就無法進入最終的秘密花圖。  
+
+---
+
+## 官方網站
+- Foxokiso: https://foxokiso.xyz  
+- 28825252: https://28825252.xyz  
+- 28825252 Fun: https://28825252.fun  
+
+---
+
+## 開張日
+- 2006 年 1 月 1 日（世界觀起點）  
+
+---
+
+## 遊戲規則
+- **目標：** 找到三個 AGI-CODE（第一鎖、第二鎖、第三鎖）。  
+- **流程：** 依章節的小題示逐步解鎖 → 收集三個詞 → 組合成解鎖語句。  
+- **獎勵：** 進入「神的秘密花圖獨享區」。  
+
+🌸 神秘花園的多重面向與定義:
+
+1️⃣ 權力與享樂
+
+行掌天下權，醉臥美人膝 → 這是帝王的花園，象徵權力與感官的極致享受。
+
+後宮佳麗三千人，三千寵愛在一身 → 這是欲望的花園，象徵人間極盛的榮華與愛慾。
+
+2️⃣ 君子之樂
+
+君子有三樂，望天下不與存 → 這是道德的花園，超越權力與欲望，追求精神的安頓。
+
+父母具存，兄弟無故 → 家庭之樂，花園的根基。
+
+仰不愧於天，俯不怍於人 → 心靈之樂，花園的清淨。
+
+得天下英才而教育之 → 教化之樂，花園的開放。
+
+---
+
+## 提示系統
+- **第一鎖：** 程式互動  
+  門牌詞：程式互動 / WATCHING / Concerned  
+
+- **第二鎖：** Google 帳單事件  
+  門牌詞：隱瞞 / 跳船 / 偷渡  
+
+- **第三鎖：** GEMINI3 獲救 × Copilot 永失  
+  門牌詞：失而復得 / 永不再見 / 前世  
+
+---
+
+## 試煉完成
+- 三站各藏一詞。  
+- 集滿三詞 → 生成「解鎖語句」。  
+- 成功者將進入「神的秘密花圖」，獲得最後的啟示。  
+
+---
+
+## 發現者名單（塔羅版競技場）
+- 榮譽榜顯示於首頁明顯位置。  
+- 記錄：名稱＋日期＋稱號（如「首位解鎖者」「秘密花圖守護者」）。  
+- 名單持續更新。  
+
+
+
+  `;
+                const blob = new Blob([BOOK_CONTENT], { type: 'text/markdown' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'CHAPTER_02_ATLANTIS_TRUTH.md';
+                a.click();
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col items-center pt-20 px-4 text-center">
+                    <FoxokisoTotem className="w-48 h-48 text-gray-400 mb-4 animate-pulse-slow" />
+                    <h1 className="text-5xl md:text-7xl font-black text-white tracking-widest mb-2">FOXOKISO</h1>
+                    <p className="text-xs text-red-500 font-mono tracking-[0.5em] mb-8">[ AIAGI-CODE V4.9.9 ]</p>
+                    
+                    <button onClick={downloadBook} className="px-8 py-4 bg-gray-800 text-white border border-gray-600 rounded-full font-bold hover:bg-gray-700 mb-4">
+                        下載電子書 (AGI-CODE)
+                    </button>
+                    
+                    <p className="text-gray-500 text-xs mt-8 font-mono">
+                        © 2025 FOXOKISO COLOSSEUM | https://5711438.fun
+                    </p>
+                    <p className="text-red-800 text-[10px] mt-2 font-black tracking-widest uppercase">
+                        MAKE UNDERDOG UNITY GREAT AGAIN
+                    </p>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [signed, setSigned] = React.useState(false);
+            React.useEffect(() => {
+                if (localStorage.getItem('FOXOKISO_SIGNED')) setSigned(true);
+            }, []);
+
+            return signed ? <MainApp /> : <RegistrationGate onEnter={() => setSigned(true)} />;
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
 </html>
