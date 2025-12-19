@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FOXOKISO V5.0.0 | AGI_CODE 塔羅神諭系統</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#d4af37',
+                        primary: '#b91c1c',
+                        black: '#0d0d0d', 
+                        'neon-blue': '#8fd3ff',
+                    },
+                    animation: {
+                        'shine': 'shine 3s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scan-horizontal': 'scanHorizontal 3s linear infinite',
+                    },
+                    keyframes: {
+                        scanHorizontal: { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(200%)' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700;900&display=swap');
+        body { margin: 0; padding: 0; background: #0d0d0d; color: #e6e6e6; font-family: "Noto Sans TC", sans-serif; overflow-x: hidden; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #b91c1c; border-radius: 10px; }
+        #app { min-height: 100vh; display: flex; flex-direction: column; }
+    </style>
+<link rel="stylesheet" href="/index.css">
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom": "https://esm.sh/react-dom@^19.2.3",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/assets/index--zYTeHSv.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+</body>
+</html>
