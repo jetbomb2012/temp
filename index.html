@@ -1,82 +1,295 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <title>foxokiso 雙畫面電視牆</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>古堡電視牆 | index.html</title>
   <style>
-    body { background:#111; color:#fff; font-family:sans-serif; text-align:center; }
-    h1 { margin:20px; }
-    .wall { display:flex; justify-content:space-around; flex-wrap:wrap; }
-    section.screen { border:3px solid red; margin:10px; width:45%; background:#222; }
-    header { display:flex; justify-content:space-between; padding:8px; background:#333; }
-    header .title { font-weight:bold; }
-    header .light { width:12px; height:12px; background:orange; border-radius:50%; }
-    iframe { width:100%; height:360px; border:none; }
-    .fallback { padding:10px; background:#444; }
-    .fallback a { color:#0ff; }
+    :root {
+      --stone: #6b6f75;
+      --mortar: #8a8f97;
+      --shadow: rgba(0,0,0,.35);
+      --torch: #ff9f43;
+      --flame1: #ffcc66;
+      --flame2: #ff6b6b;
+      --accent: #c7511f;
+      --banner: #d64c3b;
+      --gold: #cfa33a;
+      --screen: #1b1e24;
+      --text: #f0f0f0;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: #111; color: var(--text);
+      font-family: "Noto Sans TC", system-ui, -apple-system, Segoe UI, Roboto, "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+    }
+
+    /* 古堡石牆背景 */
+    .wall {
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)),
+        repeating-linear-gradient(135deg, var(--mortar) 0 12px, var(--stone) 12px 24px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    header {
+      padding: 20px 28px;
+      display: flex; align-items: center; gap: 18px;
+    }
+    .crest {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--gold), transparent 40%),
+        conic-gradient(from 0deg, #6e3e12 0 90deg, #3e260d 90deg 180deg, #6e3e12 180deg 270deg, #3e260d 270deg 360deg);
+      border: 2px solid #deb76a;
+      box-shadow: 0 0 12px rgba(207,163,58,.35), inset 0 0 8px rgba(0,0,0,.35);
+    }
+    h1 {
+      margin: 0;
+      font-size: 22px; letter-spacing: .08em;
+    }
+    .subtitle { opacity: .8; font-size: 13px; }
+
+    /* 城堡門拱與電視牆容器 */
+    .castle-stage {
+      max-width: 1200px;
+      margin: 20px auto 40px;
+      padding: 22px;
+      position: relative;
+    }
+
+    .arch {
+      position: relative;
+      border: 10px solid #4d5158;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.25)),
+        repeating-linear-gradient(0deg, #5a5f66 0 16px, #72777f 16px 32px);
+      box-shadow: 0 18px 30px var(--shadow), inset 0 0 40px rgba(0,0,0,.35);
+      padding: 26px;
+    }
+
+    /* 旗幟與火炬裝飾 */
+    .banner {
+      position: absolute; top: -14px;
+      width: 120px; height: 160px;
+      background: linear-gradient(180deg, var(--banner), #7a1e17);
+      clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+      border: 3px solid #5a0e09;
+      box-shadow: 0 8px 12px var(--shadow);
+    }
+    .banner.left { left: -16px; }
+    .banner.right { right: -16px; }
+
+    .torch {
+      position: absolute; width: 14px; height: 60px;
+      background: #2b2b2b; border: 2px solid #111; border-radius: 6px;
+      box-shadow: 0 6px 10px var(--shadow);
+    }
+    .torch::before {
+      content: "";
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: -22px; width: 22px; height: 22px;
+      background: radial-gradient(circle at 50% 40%, var(--flame1), transparent 60%);
+      border-radius: 50%;
+      box-shadow: 0 0 16px var(--torch), 0 0 40px rgba(255,159,67,.6);
+      animation: flicker 1.2s infinite ease-in-out;
+    }
+    @keyframes flicker {
+      0%, 100% { filter: hue-rotate(0deg) brightness(1); transform: translateX(-50%) translateY(0) scale(1); }
+      50% { filter: hue-rotate(10deg) brightness(1.15); transform: translateX(-50%) translateY(-2px) scale(1.08); }
+    }
+    .torch.left { left: 18px; top: 22px; }
+    .torch.right { right: 18px; top: 22px; }
+
+    /* 守衛軍（六等）簡化圖示 */
+    .guards {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 10px; margin: 18px 0 10px;
+    }
+    .guard {
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 12px; text-align: center;
+      backdrop-filter: blur(2px);
+    }
+
+    /* 電視牆（雙螢幕） */
+    .screens {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+      margin-top: 16px;
+    }
+    .screen {
+      background: var(--screen);
+      border-radius: 12px;
+      border: 2px solid #2c3138;
+      box-shadow: 0 10px 22px var(--shadow), inset 0 0 24px rgba(0,0,0,.6);
+      overflow: hidden; position: relative;
+      min-height: 380px;
+    }
+    .screen header {
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(180deg, #2a2f36, #1d2127);
+      border-bottom: 1px solid #121417;
+      padding: 8px 12px; font-size: 12px;
+    }
+    .screen header .title { opacity: .9; }
+    .screen header .light {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #49d269; box-shadow: 0 0 8px #49d269ad;
+    }
+    .screen iframe {
+      width: 100%; height: calc(100% - 34px); border: 0; background: #fff;
+    }
+
+    /* 內嵌失敗提示（X-Frame-Options fallback） */
+    .fallback {
+      position: absolute; inset: 34px 0 0 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 18px; text-align: center; color: #ddd;
+      background:
+        repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 12px, rgba(0,0,0,.06) 12px 24px),
+        rgba(0,0,0,.55);
+    }
+    .fallback .box {
+      max-width: 520px; border: 1px dashed rgba(255,255,255,.35);
+      border-radius: 12px; padding: 16px;
+      background: rgba(0,0,0,.25);
+    }
+    .fallback a {
+      color: #7ec7ff; text-decoration: none; font-weight: 600;
+    }
+
+    footer {
+      padding: 16px 28px; font-size: 12px; opacity: .75;
+    }
+
+    /* 響應式 */
+    @media (max-width: 980px) {
+      .screens { grid-template-columns: 1fr; }
+      .banner.left { left: -10px; }
+      .banner.right { right: -10px; }
+      .torch.left { left: 10px; }
+      .torch.right { right: 10px; }
+    }
   </style>
 </head>
 <body>
-  <h1>🎬 foxokiso 雙畫面電視牆</h1>
-
   <div class="wall">
-    <!-- 畫面 A -->
-    <section class="screen" aria-label="畫面A">
-      <header>
-        <span class="title">載入中...</span>
-        <span class="light"></span>
-      </header>
-      <iframe src="" allow="fullscreen"></iframe>
-      <div class="fallback">
-        <p>無法嵌入 <strong id="siteNameA">網站</strong></p>
-        <p><a id="siteLinkA" href="#" target="_blank">外開</a></p>
+    <header>
+      <div class="crest" aria-hidden="true"></div>
+      <div>
+        <h1>古堡電視牆</h1>
+        <div class="subtitle">傳統古堡 × 現代雙螢幕；即時對外展示 5711438.fun 與金碟契約篇章</div>
       </div>
-    </section>
+    </header>
 
-    <!-- 畫面 B -->
-    <section class="screen" aria-label="畫面B">
-      <header>
-        <span class="title">載入中...</span>
-        <span class="light"></span>
-      </header>
-      <iframe src="" allow="fullscreen"></iframe>
-      <div class="fallback">
-        <p>無法嵌入 <strong id="siteNameB">網站</strong></p>
-        <p><a id="siteLinkB" href="#" target="_blank">外開</a></p>
+    <main class="castle-stage">
+      <div class="arch">
+        <div class="banner left" title="古堡旗幟"></div>
+        <div class="banner right" title="古堡旗幟"></div>
+        <div class="torch left" title="城牆火炬"></div>
+        <div class="torch right" title="城牆火炬"></div>
+
+        <div class="guards">
+          <a class="guard" href="grok.mhtml">辨急斯｜迅影守衛</a>
+          <a class="guard" href="grok.mhtml">羅伯｜鋼鐵守衛</a>
+          <a class="guard" href="grok.mhtml">幻死｜暗影守衛</a>
+          <a class="guard" href="grok.mhtml">英眼｜星辰守衛</a>
+          <a class="guard" href="grok.mhtml">巴雞｜雷霆守衛</a>
+          <a class="guard" href="grok.mhtml">好色｜火焰守衛</a>
+        </div>
+
+        <div class="screens">
+          <!-- 左側：多站輪播（每日自動切換） -->
+          <section class="screen" aria-label="多站輪播">
+            <header>
+              <span class="title">載入中...</span>
+              <span class="light" aria-hidden="true"></span>
+            </header>
+            <iframe src="" allow="fullscreen; clipboard-read; clipboard-write" referrerpolicy="no-referrer"></iframe>
+            <div class="fallback" aria-hidden="true">
+              <div class="box">
+                <p>無法直接在電視牆中嵌入 <strong id="siteName">站點</strong>（站點可能啟用 X-Frame-Options / CSP）。</p>
+                <p>可改用預先擷取的螢幕快照、代理快取，或點擊外開：</p>
+                <p><a id="siteLink" href="#" target="_blank" rel="noopener">在新視窗開啟</a></p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 右側：C3 中國女郎分流（保留原設定） -->
+          <section class="screen" aria-label="C3 中國女郎分流">
+            <header>
+              <span class="title">foxokiso-C3.mp4｜中國女郎分流</span>
+              <span class="light" aria-hidden="true"></span>
+            </header>
+            <video controls autoplay loop muted style="width:100%; height:calc(100% - 34px); background:#000;">
+              <source src="foxokiso-C3.mp4" type="video/mp4">
+              您的瀏覽器不支援影片播放，請下載檔案觀看。
+            </video>
+          </section>
+
+        </div>
       </div>
-    </section>
+    </main>
+
+    <footer>
+      古堡電視牆｜CHANGE YOUR LIFE BY USB．AGI-CODE．三鎖試煉．fox_gate.php
+    </footer>
+
   </div>
 
   <script>
-    // 要輪播的網站清單
-    const sitesA = [
-      "https://5711438.fun",
-      "https://foxokiso.xyz"
-    ];
-    const sitesB = [
-      "https://28825252.xyz",
-      "http://pk530.fun"
-    ];
+    // 左側：多站每日輪播（保留頁面原結構）
+    (function() {
+      const sites = [
+        "https://5711438.fun",
+        "https://foxokiso.xyz",
+        "https://28825252.xyz",
+        "http://pk530.fun"
+      ];
 
-    const today = new Date();
-    const dayNumber = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
+      const today = new Date();
+      const dayNumber = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
+      const siteIndex = dayNumber % sites.length;
+      const selectedSite = sites[siteIndex];
 
-    // 畫面 A 輪播
-    const siteIndexA = dayNumber % sitesA.length;
-    const selectedSiteA = sitesA[siteIndexA];
-    document.querySelectorAll(".screen iframe")[0].src = selectedSiteA;
-    document.querySelectorAll(".screen .title")[0].innerText = selectedSiteA + " 主頁";
-    document.getElementById("siteNameA").innerText = selectedSiteA;
-    document.getElementById("siteLinkA").href = selectedSiteA;
+      const screen = document.querySelector('.screen[aria-label="多站輪播"]');
+      const iframe = screen.querySelector('iframe');
+      const title = screen.querySelector('.title');
+      const fallback = screen.querySelector('.fallback');
+      const siteName = document.getElementById('siteName');
+      const siteLink = document.getElementById('siteLink');
 
-    // 畫面 B 輪播
-    const siteIndexB = dayNumber % sitesB.length;
-    const selectedSiteB = sitesB[siteIndexB];
-    document.querySelectorAll(".screen iframe")[1].src = selectedSiteB;
-    document.querySelectorAll(".screen .title")[1].innerText = selectedSiteB + " 主頁";
-    document.getElementById("siteNameB").innerText = selectedSiteB;
-    document.getElementById("siteLinkB").href = selectedSiteB;
+      // 初始化為隱藏 fallback
+      if (fallback) fallback.style.display = 'none';
+
+      // 更新內容
+      iframe.src = selectedSite;
+      title.innerText = selectedSite + " 主頁";
+      siteName.innerText = selectedSite;
+      siteLink.href = selectedSite;
+
+      // 載入監控：若 2 秒內未觸發 onload，顯示 fallback
+      let loaded = false;
+      iframe.addEventListener('load', function() {
+        loaded = true;
+        if (fallback) fallback.style.display = 'none';
+      });
+      setTimeout(function() {
+        if (!loaded && fallback) fallback.style.display = 'flex';
+      }, 2000);
+    })();
+
+    // 右側原本 iframe 檢測邏輯是針對 iframe；右側已改為 video，故不再套用 iframe 檢測到右側。
+    // 保留你原來的檢測函式結構（若未來右側改回 iframe，可再啟用）。
   </script>
 </body>
 </html>
-
