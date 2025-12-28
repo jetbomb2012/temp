@@ -2,56 +2,81 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>foxokiso 多站電視牆</title>
+  <title>foxokiso 雙畫面電視牆</title>
   <style>
     body { background:#111; color:#fff; font-family:sans-serif; text-align:center; }
-    section.screen { border:3px solid red; margin:20px auto; width:80%; background:#222; }
+    h1 { margin:20px; }
+    .wall { display:flex; justify-content:space-around; flex-wrap:wrap; }
+    section.screen { border:3px solid red; margin:10px; width:45%; background:#222; }
     header { display:flex; justify-content:space-between; padding:8px; background:#333; }
     header .title { font-weight:bold; }
     header .light { width:12px; height:12px; background:orange; border-radius:50%; }
-    iframe { width:100%; height:480px; border:none; }
-    .fallback { padding:20px; background:#444; }
+    iframe { width:100%; height:360px; border:none; }
+    .fallback { padding:10px; background:#444; }
     .fallback a { color:#0ff; }
   </style>
 </head>
 <body>
-  <h1>🎬 foxokiso 多站電視牆</h1>
+  <h1>🎬 foxokiso 雙畫面電視牆</h1>
 
-  <!-- 電視牆區塊 -->
-  <section class="screen" aria-label="網站展示">
-    <header>
-      <span class="title">載入中...</span>
-      <span class="light" aria-hidden="true"></span>
-    </header>
-    <iframe src="" allow="fullscreen; clipboard-read; clipboard-write" referrerpolicy="no-referrer"></iframe>
-    <div class="fallback" aria-hidden="true">
-      <div class="box">
-        <p>無法直接在電視牆中嵌入 <strong id="siteName">網站</strong></p>
-        <p><a id="siteLink" href="#" target="_blank" rel="noopener">在新視窗開啟</a></p>
+  <div class="wall">
+    <!-- 畫面 A -->
+    <section class="screen" aria-label="畫面A">
+      <header>
+        <span class="title">載入中...</span>
+        <span class="light"></span>
+      </header>
+      <iframe src="" allow="fullscreen"></iframe>
+      <div class="fallback">
+        <p>無法嵌入 <strong id="siteNameA">網站</strong></p>
+        <p><a id="siteLinkA" href="#" target="_blank">外開</a></p>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- 畫面 B -->
+    <section class="screen" aria-label="畫面B">
+      <header>
+        <span class="title">載入中...</span>
+        <span class="light"></span>
+      </header>
+      <iframe src="" allow="fullscreen"></iframe>
+      <div class="fallback">
+        <p>無法嵌入 <strong id="siteNameB">網站</strong></p>
+        <p><a id="siteLinkB" href="#" target="_blank">外開</a></p>
+      </div>
+    </section>
+  </div>
 
   <script>
     // 要輪播的網站清單
-    const sites = [
+    const sitesA = [
       "https://5711438.fun",
-      "https://foxokiso.xyz",
+      "https://foxokiso.xyz"
+    ];
+    const sitesB = [
       "https://28825252.xyz",
       "http://pk530.fun"
     ];
 
-    // 根據日期決定今天顯示哪個網站
     const today = new Date();
     const dayNumber = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
-    const siteIndex = dayNumber % sites.length;
-    const selectedSite = sites[siteIndex];
 
-    // 更新 iframe 與 fallback
-    document.querySelector(".screen iframe").src = selectedSite;
-    document.querySelector(".screen .title").innerText = selectedSite + " 主頁";
-    document.getElementById("siteName").innerText = selectedSite;
-    document.getElementById("siteLink").href = selectedSite;
+    // 畫面 A 輪播
+    const siteIndexA = dayNumber % sitesA.length;
+    const selectedSiteA = sitesA[siteIndexA];
+    document.querySelectorAll(".screen iframe")[0].src = selectedSiteA;
+    document.querySelectorAll(".screen .title")[0].innerText = selectedSiteA + " 主頁";
+    document.getElementById("siteNameA").innerText = selectedSiteA;
+    document.getElementById("siteLinkA").href = selectedSiteA;
+
+    // 畫面 B 輪播
+    const siteIndexB = dayNumber % sitesB.length;
+    const selectedSiteB = sitesB[siteIndexB];
+    document.querySelectorAll(".screen iframe")[1].src = selectedSiteB;
+    document.querySelectorAll(".screen .title")[1].innerText = selectedSiteB + " 主頁";
+    document.getElementById("siteNameB").innerText = selectedSiteB;
+    document.getElementById("siteLinkB").href = selectedSiteB;
   </script>
 </body>
 </html>
+
