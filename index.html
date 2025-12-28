@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>foxokiso 多站電視牆</title>
+  <style>
+    body { background:#111; color:#fff; font-family:sans-serif; text-align:center; }
+    section.screen { border:3px solid red; margin:20px auto; width:80%; background:#222; }
+    header { display:flex; justify-content:space-between; padding:8px; background:#333; }
+    header .title { font-weight:bold; }
+    header .light { width:12px; height:12px; background:orange; border-radius:50%; }
+    iframe { width:100%; height:480px; border:none; }
+    .fallback { padding:20px; background:#444; }
+    .fallback a { color:#0ff; }
+  </style>
+</head>
+<body>
+  <h1>🎬 foxokiso 多站電視牆</h1>
+
+  <!-- 電視牆區塊 -->
+  <section class="screen" aria-label="網站展示">
+    <header>
+      <span class="title">載入中...</span>
+      <span class="light" aria-hidden="true"></span>
+    </header>
+    <iframe src="" allow="fullscreen; clipboard-read; clipboard-write" referrerpolicy="no-referrer"></iframe>
+    <div class="fallback" aria-hidden="true">
+      <div class="box">
+        <p>無法直接在電視牆中嵌入 <strong id="siteName">網站</strong></p>
+        <p><a id="siteLink" href="#" target="_blank" rel="noopener">在新視窗開啟</a></p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // 要輪播的網站清單
+    const sites = [
+      "https://5711438.fun",
+      "https://foxokiso.xyz",
+      "https://28825252.xyz",
+      "http://pk530.fun"
+    ];
+
+    // 根據日期決定今天顯示哪個網站
+    const today = new Date();
+    const dayNumber = Math.floor(today.getTime() / (1000 * 60 * 60 * 24));
+    const siteIndex = dayNumber % sites.length;
+    const selectedSite = sites[siteIndex];
+
+    // 更新 iframe 與 fallback
+    document.querySelector(".screen iframe").src = selectedSite;
+    document.querySelector(".screen .title").innerText = selectedSite + " 主頁";
+    document.getElementById("siteName").innerText = selectedSite;
+    document.getElementById("siteLink").href = selectedSite;
+  </script>
+</body>
+</html>
