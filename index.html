@@ -42,7 +42,7 @@
       <div class="crest"></div>
       <div>
         <h1>古堡電視牆</h1>
-        <div class="subtitle">Castle × Guardian × Ritual 三系列循環展示</div>
+        <div class="subtitle">Castle × Guardian × Ritual × 主角動態 四系列循環展示</div>
       </div>
     </header>
 
@@ -88,14 +88,4 @@
     (function() {
       const sites = ["https://5711438.fun","https://foxokiso.xyz","https://28825252.xyz"];
       const fallbackSite = "https://example.com"; // 保底站點
-      const dayNumber = Math.floor(new Date().getTime() / (1000*60*60*24));
-      const siteIndex = dayNumber % sites.length;
-      const selectedSite = sites[siteIndex];
-
-      const screen = document.querySelector('.screen[aria-label="多站輪播"]');
-      const iframe = screen.querySelector('iframe');
-      const title = screen.querySelector('.title');
-      const fallback = screen.querySelector('.fallback');
-
-      iframe.src = selectedSite;
-      title.inner
+      const
