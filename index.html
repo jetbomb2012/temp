@@ -2,66 +2,14 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <title>古堡電視牆｜C系列輪動</title>
-  <style>
-    body {
-      background: #111;
-      color: #f0f0f0;
-      font-family: "Noto Sans TC", system-ui;
-      text-align: center;
-      padding: 40px;
-    }
-    h1 { font-size: 24px; margin-bottom: 20px; }
-    #seriesName { font-size: 20px; margin: 20px 0; }
-    #message { font-size: 16px; margin: 10px 0; }
-    video { width: 80%; max-width: 720px; margin-top: 20px; border: 2px solid #444; border-radius: 8px; }
-    .fade-in { animation: fadeIn 1.2s ease-in-out; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  <title>古堡電視牆</title>
 </head>
 <body>
-  <h1>古堡電視牆（C系列輪動）</h1>
-  <div id="seriesName"></div>
-  <div id="message"></div>
-  <video id="video" controls autoplay loop muted>
-    <source id="videoSource" src="" type="video/mp4">
+  <h1>古堡電視牆（原始版）</h1>
+  <p>載入影片...</p>
+  <video controls autoplay loop muted>
+    <source src="video/c/c1.mp4" type="video/mp4">
     您的瀏覽器不支援影片播放。
   </video>
-
-  <script>
-    const day = new Date();
-    const dayIndex = (day.getDate() - 1) % 7 + 1; // 1–7
-    const filename = `c${dayIndex}.mp4`;
-
-    const messages = {
-      "c1.mp4": "古堡初啟，守門人立誓。",
-      "c2.mp4": "審判之塔，記錄不息。",
-      "c3.mp4": "輪回守護，C3 出現。",
-      "c4.mp4": "星辰守望，光影交錯。",
-      "c5.mp4": "今日審判，真理顯現。",
-      "c6.mp4": "封存之門，開啟紀錄。",
-      "c7.mp4": "古堡閉合，今日完成。"
-    };
-
-    const seriesNameBox = document.getElementById("seriesName");
-    const messageBox = document.getElementById("message");
-    const videoBox = document.getElementById("video");
-    const videoSource = document.getElementById("videoSource");
-
-    seriesNameBox.innerText = "今日系列：Castle";
-    seriesNameBox.classList.add("fade-in");
-
-    messageBox.innerText = messages[filename] || "";
-    messageBox.classList.add("fade-in");
-
-    videoSource.src = `video/c/${filename}`;
-    videoBox.classList.add("fade-in");
-    videoBox.load();
-  </script>
 </body>
 </html>
-
-
