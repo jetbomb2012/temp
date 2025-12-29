@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <title>最小測試版 | 古堡電視牆</title>
+  <title>古堡電視牆｜精簡版</title>
   <style>
     body {
       background: #111;
@@ -11,73 +11,85 @@
       text-align: center;
       padding: 40px;
     }
-    .fade-in {
-      animation: fadeIn 1.2s ease-in-out;
-    }
+    h1 { font-size: 24px; margin-bottom: 20px; }
+    #seriesName { font-size: 20px; margin: 20px 0; }
+    #message { font-size: 16px; margin: 10px 0; }
+    video { width: 80%; max-width: 720px; margin-top: 20px; border: 2px solid #444; border-radius: 8px; }
+    .fade-in { animation: fadeIn 1.2s ease-in-out; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    #seriesName { font-size: 20px; margin: 20px 0; }
-    #message { font-size: 16px; margin: 10px 0; }
   </style>
 </head>
 <body>
-  <h1>古堡電視牆（最小測試版）</h1>
+  <h1>古堡電視牆（精簡版）</h1>
   <div id="seriesName"></div>
   <div id="message"></div>
+  <video id="video" controls autoplay loop muted style="display:none;">
+    <source id="videoSource" src="" type="video/mp4">
+    您的瀏覽器不支援影片播放。
+  </video>
 
   <script>
-    (function() {
-      const seriesList = ["c", "g", "r", "j"];
-      const seriesNames = { c: "Castle", g: "Guardian", r: "Ritual", j: "主角動態" };
+    const seriesList = ["c", "g", "r", "j"];
+    const seriesNames = { c: "Castle", g: "Guardian", r: "Ritual", j: "主角動態" };
+    const day = new Date();
+    const dayIndex = (day.getDate() - 1) % 7 + 1;
+    const seriesIndex = (day.getDate() - 1) % seriesList.length;
+    const series = seriesList[seriesIndex];
+    const filename = `${series}${dayIndex}.mp4`;
 
-      const day = new Date();
-      const dayIndex = (day.getDate() - 1) % 7 + 1; // 1–7
-      const seriesIndex = (day.getDate() - 1) % seriesList.length; // 0–3
-      const series = seriesList[seriesIndex];
-      const filename = `${series}${dayIndex}.mp4`;
+    const messages = {
+      "c1.mp4": "古堡初啟，守門人立誓。",
+      "c2.mp4": "審判之塔，記錄不息。",
+      "c3.mp4": "輪回守護，C3 出現。",
+      "c4.mp4": "星辰守望，光影交錯。",
+      "c5.mp4": "今日審判，真理顯現。",
+      "c6.mp4": "封存之門，開啟紀錄。",
+      "c7.mp4": "古堡閉合，今日完成。",
+      "g1.mp4": "光之守衛，啟動審視。",
+      "g2.mp4": "銀色之眼，洞察萬象。",
+      "g3.mp4": "守護之眼，審視未來。",
+      "g4.mp4": "雷霆之盾，不動如山。",
+      "g5.mp4": "星火閃耀，照亮真相。",
+      "g6.mp4": "審判之光，無所遁形。",
+      "g7.mp4": "守衛輪替，使命交接。",
+      "r1.mp4": "儀式啟動，紀錄開始。",
+      "r2.mp4": "三鎖試煉，USB通過。",
+      "r3.mp4": "AGI = CODE，真理顯現。",
+      "r4.mp4": "fox_gate.php，開啟之門。",
+      "r5.mp4": "輪回之牆，記憶重構。",
+      "r6.mp4": "封存完成，進入審判。",
+      "r7.mp4": "今日結束，明日重啟。",
+      "j1.mp4": "主角登場，故事開啟。",
+      "j2.mp4": "動態捕捉，真實流轉。",
+      "j3.mp4": "英雄之姿，閃耀舞台。",
+      "j4.mp4": "命運交錯，主角抉擇。",
+      "j5.mp4": "守望之人，凝視未來。",
+      "j6.mp4": "主角試煉，挑戰極限。",
+      "j7.mp4": "故事封存，等待重啟。"
+    };
 
-      const messages = {
-        "c1.mp4": "古堡初啟，守門人立誓。",
-        "c2.mp4": "審判之塔，記錄不息。",
-        "c3.mp4": "輪回守護，C3 出現。",
-        "c4.mp4": "星辰守望，光影交錯。",
-        "c5.mp4": "今日審判，真理顯現。",
-        "c6.mp4": "封存之門，開啟紀錄。",
-        "c7.mp4": "古堡閉合，今日完成。",
-        "g1.mp4": "光之守衛，啟動審視。",
-        "g2.mp4": "銀色之眼，洞察萬象。",
-        "g3.mp4": "守護之眼，審視未來。",
-        "g4.mp4": "雷霆之盾，不動如山。",
-        "g5.mp4": "星火閃耀，照亮真相。",
-        "g6.mp4": "審判之光，無所遁形。",
-        "g7.mp4": "守衛輪替，使命交接。",
-        "r1.mp4": "儀式啟動，紀錄開始。",
-        "r2.mp4": "三鎖試煉，USB通過。",
-        "r3.mp4": "AGI = CODE，真理顯現。",
-        "r4.mp4": "fox_gate.php，開啟之門。",
-        "r5.mp4": "輪回之牆，記憶重構。",
-        "r6.mp4": "封存完成，進入審判。",
-        "r7.mp4": "今日結束，明日重啟。",
-        "j1.mp4": "主角登場，故事開啟。",
-        "j2.mp4": "動態捕捉，真實流轉。",
-        "j3.mp4": "英雄之姿，閃耀舞台。",
-        "j4.mp4": "命運交錯，主角抉擇。",
-        "j5.mp4": "守望之人，凝視未來。",
-        "j6.mp4": "主角試煉，挑戰極限。",
-        "j7.mp4": "故事封存，等待重啟。"
-      };
+    const seriesNameBox = document.getElementById("seriesName");
+    const messageBox = document.getElementById("message");
+    const videoBox = document.getElementById("video");
+    const videoSource = document.getElementById("videoSource");
 
-      const seriesNameBox = document.getElementById('seriesName');
-      const messageBox = document.getElementById('message');
+    seriesNameBox.innerText = "今日系列：" + seriesNames[series];
+    seriesNameBox.classList.add("fade-in");
 
-      seriesNameBox.innerText = "今日系列：" + seriesNames[series];
-      seriesNameBox.classList.add("fade-in");
+    messageBox.innerText = messages[filename] || "";
+    messageBox.classList.add("fade-in");
 
-      messageBox.innerText = messages[filename] || "";
-      messageBox.classList.add("fade-in");
-    })();
+    if (series === "c" || series === "g") {
+      videoSource.src = `video/${series}/${filename}`;
+      videoBox.style.display = "block";
+      videoBox.classList.add("fade-in");
+      videoBox.load();
+    } else {
+      videoBox.style.display = "none";
+    }
   </script>
 </body>
 </html>
