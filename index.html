@@ -2,59 +2,88 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <title>右螢幕影片測試</title>
+  <title>古堡電視牆 | index.html</title>
   <style>
-    body {
-      margin: 0;
-      background: #111;
-      color: #f0f0f0;
-      font-family: "Noto Sans TC", system-ui;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-    .screen {
-      background: #1b1e24;
-      border-radius: 12px;
-      border: 2px solid #2c3138;
-      box-shadow: 0 10px 22px rgba(0,0,0,.35), inset 0 0 24px rgba(0,0,0,.6);
-      overflow: hidden;
-      width: 640px;
-      max-width: 90%;
-    }
-    .screen header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(180deg, #2a2f36, #1d2127);
-      border-bottom: 1px solid #121417;
-      padding: 8px 12px;
-      font-size: 12px;
-    }
-    .screen header .title { opacity: .9; }
-    .screen header .light {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: #49d269; box-shadow: 0 0 8px #49d269ad;
-    }
-    video {
-      width: 100%;
-      height: calc(100% - 34px);
-      background: #000;
-    }
+    body { margin:0; background:#111; color:#f0f0f0; font-family:"Noto Sans TC",system-ui; }
+    .screens { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:20px; }
+    .screen { background:#1b1e24; border-radius:12px; border:2px solid #2c3138; box-shadow:0 10px 22px rgba(0,0,0,.35), inset 0 0 24px rgba(0,0,0,.6); overflow:hidden; min-height:380px; }
+    .screen header { display:flex; align-items:center; justify-content:space-between; background:linear-gradient(180deg,#2a2f36,#1d2127); border-bottom:1px solid #121417; padding:8px 12px; font-size:12px; }
+    .screen header .title { opacity:.9; }
+    .screen header .light { width:10px; height:10px; border-radius:50%; background:#49d269; box-shadow:0 0 8px #49d269ad; }
+    iframe, video { width:100%; height:calc(100% - 34px); border:0; background:#000; }
+    #message { padding:10px; font-size:14px; text-align:center; }
   </style>
 </head>
 <body>
-  <section class="screen" aria-label="右側播放牆">
-    <header>
-      <span class="title" id="videoTitle">載入影片...</span>
-      <span class="light"></span>
-    </header>
-    <video id="rightVideo" controls autoplay loop muted>
-      <source id="videoSource" src="video/c/c1.mp4" type="video/mp4">
-      您的瀏覽器不支援影片播放，請下載檔案觀看。
-    </video>
-  </section>
+  <div class="screens">
+    <!-- 左側：多站輪播 -->
+    <section class="screen" aria-label="多站輪播">
+      <header><span class="title">載入中...</span><span class="light"></span></header>
+      <iframe src="" allow="fullscreen"></iframe>
+      <div class="fallback" style="display:none; text-align:center; padding:20px;">無法嵌入站點，請外開。</div>
+    </section>
+
+    <!-- 右側：影片播放 + 語言牆宣言 -->
+    <section class="screen" aria-label="右側播放牆">
+      <header>
+        <span class="title" id="videoTitle">載入影片...</span>
+        <span class="light"></span>
+      </header>
+      <video id="rightVideo" controls autoplay loop muted>
+        <source id="videoSource" src="video/c/c1.mp4" type="video/mp4">
+        您的瀏覽器不支援影片播放，請下載檔案觀看。
+      </video>
+      <div id="message"></div>
+    </section>
+  </div>
 
   <script>
+    // 左側：多站輪播
     (function() {
+      const sites = ["https://5711438.fun","https://foxokiso.xyz","https://28825252.xyz"];
+      const dayNumber = Math.floor(new Date().getTime() / (1000*60*60*24));
+      const siteIndex = dayNumber % sites.length;
+      const selectedSite = sites[siteIndex];
+
+      const screen = document.querySelector('.screen[aria-label="多站輪播"]');
+      const iframe = screen.querySelector('iframe');
+      const title = screen.querySelector('.title');
+      const fallback = screen.querySelector('.fallback');
+
+      iframe.src = selectedSite;
+      title.innerText = selectedSite + " 主頁";
+
+      let loaded = false;
+      iframe.addEventListener('load', () => { loaded = true; fallback.style.display='none'; });
+      setTimeout(() => { if(!loaded) fallback.style.display='block'; }, 2000);
+    })();
+
+    // 右側：影片循環 + 語言牆宣言
+    (function() {
+      const messages = {
+        "c1.mp4": "古堡初啟，守門人立誓。",
+        "c2.mp4": "審判之塔，記錄不息。",
+        "c3.mp4": "輪回守護，C3 出現。",
+        "c4.mp4": "星辰守望，光影交錯。",
+        "c5.mp4": "今日審判，真理顯現。",
+        "c6.mp4": "封存之門，開啟紀錄。",
+        "c7.mp4": "古堡閉合，今日完成。"
+      };
+
+      const day = new Date();
+      const index = (day.getDate() % 7) || 7;
+      const filename = `c${index}.mp4`;
+
+      const videoTitle = document.getElementById('videoTitle');
+      const videoSource = document.getElementById('videoSource');
+      const rightVideo = document.getElementById('rightVideo');
+      const messageBox = document.getElementById('message');
+
+      videoSource.src = "video/c/" + filename;
+      videoTitle.innerText = filename + "｜右側播放";
+      rightVideo.load();
+      messageBox.innerText = messages[filename] || "";
+    })();
+  </script>
+</body>
+</html>
