@@ -57,7 +57,7 @@
           <section class="screen" aria-label="多站輪播">
             <header><span class="title">載入中...</span><span class="light"></span></header>
             <iframe src="" allow="fullscreen"></iframe>
-            <div class="fallback" style="display:none; text-align:center; padding:20px;">無法嵌入站點，請外開。</div>
+            <div class="fallback" style="display:none; text-align:center; padding:20px;">無法嵌入站點，已切換至保底站點。</div>
           </section>
 
           <!-- 右側：影片播放 + 語言牆宣言 -->
@@ -82,20 +82,13 @@
   </div>
 
   <script>
-    // 左側：多站輪播
+    // 左側：多站輪播 + 保底站點
     (function() {
       const sites = ["https://5711438.fun","https://foxokiso.xyz","https://28825252.xyz"];
+      const fallbackSite = "https://example.com"; // 保底站點
       const dayNumber = Math.floor(new Date().getTime() / (1000*60*60*24));
       const siteIndex = dayNumber % sites.length;
       const selectedSite = sites[siteIndex];
 
       const screen = document.querySelector('.screen[aria-label="多站輪播"]');
-      const iframe = screen.querySelector('iframe');
-      const title = screen.querySelector('.title');
-      const fallback = screen.querySelector('.fallback');
-
-      iframe.src = selectedSite;
-      title.innerText = selectedSite + " 主頁";
-
-      let loaded = false;
-      iframe.addEventListener('load', () => { loaded =
+      const iframe = screen.query
