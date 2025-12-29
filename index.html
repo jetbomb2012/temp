@@ -32,6 +32,7 @@
     .screen header .light { width:10px; height:10px; border-radius:50%; background:#49d269; box-shadow:0 0 8px #49d269ad; }
     iframe, video { width:100%; height:calc(100% - 34px); border:0; background:#000; }
     #message { padding:10px; font-size:14px; text-align:center; }
+    #seriesName { padding:5px; font-size:13px; text-align:center; opacity:.8; }
     footer { padding:16px 28px; font-size:12px; opacity:.75; }
   </style>
 </head>
@@ -70,6 +71,7 @@
               <source id="videoSource" src="video/c/c1.mp4" type="video/mp4">
               您的瀏覽器不支援影片播放，請下載檔案觀看。
             </video>
+            <div id="seriesName"></div>
             <div id="message"></div>
           </section>
         </div>
@@ -91,4 +93,9 @@
       const selectedSite = sites[siteIndex];
 
       const screen = document.querySelector('.screen[aria-label="多站輪播"]');
-      const iframe = screen.query
+      const iframe = screen.querySelector('iframe');
+      const title = screen.querySelector('.title');
+      const fallback = screen.querySelector('.fallback');
+
+      iframe.src = selectedSite;
+      title.inner
