@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>古堡神盾艦 🏰 Castle AI Portal｜AI 園區總入口</title>
+
+  <meta name="description" content="古堡神盾艦 Castle AI Portal：AI、知識庫、生圖、自動化與數位服務的古堡艦隊總入口。你登艦了嗎？">
+  <meta name="keywords" content="Castle AI Portal, 古堡艦隊, AI園區, AI Chat, 知識庫, AI生圖, 古堡中控">
+  <meta property="og:title" content="古堡神盾艦 🏰 Castle AI Portal">
+  <meta property="og:description" content="AI × 知識庫 × 生圖 × 自動化工作平台。建立屬於自己的 AI 古堡，讓所有 AI 成為你的艦隊。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://28825252.vip/">
+  <meta property="og:image" content="https://28825252.vip/images/castle-tvwall.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="古堡神盾艦 🏰 Castle AI Portal">
+  <meta name="twitter:description" content="AI × 知識庫 × 生圖 × 自動化工作平台。你登艦了嗎？">
+  <meta name="twitter:image" content="https://28825252.vip/images/castle-tvwall.jpg">
+
+  <style>
+    :root {
+      --stone:#6b6f75;
+      --mortar:#8a8f97;
+      --shadow:rgba(0,0,0,.42);
+      --torch:#ff9f43;
+      --flame1:#ffcc66;
+      --banner:#d64c3b;
+      --gold:#cfa33a;
+      --screen:#15181d;
+      --text:#f0f0f0;
+      --muted:#b9bec6;
+      --card:rgba(0,0,0,.28);
+      --border:rgba(255,255,255,.13);
+      --green:#49d269;
+      --blue:#64b5ff;
+    }
+
+    * { box-sizing:border-box; }
+
+    html,body {
+      margin:0;
+      min-height:100%;
+      background:#111;
+      color:var(--text);
+      font-family:"Noto Sans TC",system-ui,-apple-system,"Segoe UI",
+        "PingFang TC","Microsoft JhengHei",Arial,sans-serif;
+    }
+
+    body { overflow-x:hidden; }
+
+    a { color:inherit; }
+
+    .wall {
+      min-height:100vh;
+      background:
+        linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,.66)),
+        repeating-linear-gradient(135deg,var(--mortar) 0 12px,var(--stone) 12px 24px);
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+    }
+
+    header.site-header {
+      padding:22px 28px 12px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      max-width:1400px;
+      width:100%;
+      margin:auto;
+    }
+
+    .castle-logo {
+      width:48px;
+      height:48px;
+      flex:0 0 48px;
+      object-fit:contain;
+      padding:4px;
+      border-radius:8px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 4px 12px rgba(0,0,0,.28);
+    }
+
+    .crest {
+      width:56px;
+      height:56px;
+      flex:0 0 56px;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at 30% 30%,var(--gold),transparent 40%),
+        conic-gradient(from 0deg,#6e3e12 0 90deg,#3e260d 90deg 180deg,
+        #6e3e12 180deg 270deg,#3e260d 270deg 360deg);
+      border:2px solid #deb76a;
+      box-shadow:0 0 16px rgba(207,163,58,.35),inset 0 0 8px rgba(0,0,0,.35);
+    }
+
+    h1 {
+      margin:0;
+      font-size:clamp(21px,3vw,30px);
+      letter-spacing:.06em;
+    }
+
+    .subtitle {
+      margin-top:5px;
+      color:#e0e0e0;
+      opacity:.86;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .tagline {
+      margin-top:4px;
+      color:#ffd985;
+      font-weight:700;
+      letter-spacing:.08em;
+    }
+
+    .castle-stage {
+      max-width:1400px;
+      width:100%;
+      margin:12px auto 34px;
+      padding:22px;
+      position:relative;
+    }
+
+    .arch {
+      position:relative;
+      border:10px solid #4d5158;
+      border-radius:26px;
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.25)),
+        repeating-linear-gradient(0deg,#5a5f66 0 16px,#72777f 16px 32px);
+      box-shadow:0 18px 30px var(--shadow),inset 0 0 40px rgba(0,0,0,.35);
+      padding:28px;
+    }
+
+    .banner {
+      position:absolute;
+      top:-14px;
+      width:105px;
+      height:145px;
+      background:linear-gradient(180deg,var(--banner),#7a1e17);
+      clip-path:polygon(0 0,100% 0,100% 70%,50% 100%,0 70%);
+      border:3px solid #5a0e09;
+      box-shadow:0 8px 12px var(--shadow);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    .banner.left { left:-16px; }
+    .banner.right { right:-16px; }
+
+    .torch {
+      position:absolute;
+      width:14px;
+      height:60px;
+      background:#2b2b2b;
+      border:2px solid #111;
+      border-radius:6px;
+      box-shadow:0 6px 10px var(--shadow);
+    }
+
+    .torch::before {
+      content:"";
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      top:-22px;
+      width:22px;
+      height:22px;
+      background:radial-gradient(circle at 50% 40%,var(--flame1),transparent 60%);
+      border-radius:50%;
+      box-shadow:0 0 16px var(--torch),0 0 40px rgba(255,159,67,.6);
+      animation:flicker 1.2s infinite ease-in-out;
+    }
+
+    @keyframes flicker {
+      0%,100% {
+        filter:hue-rotate(0deg) brightness(1);
+        transform:translateX(-50%) translateY(0) scale(1);
+      }
+      50% {
+        filter:hue-rotate(10deg) brightness(1.15);
+        transform:translateX(-50%) translateY(-2px) scale(1.08);
+      }
+    }
+
+    .torch.left { left:18px; top:22px; }
+    .torch.right { right:18px; top:22px; }
+
+    .portal-intro {
+      text-align:center;
+      padding:8px 80px 22px;
+    }
+
+    .portal-intro h2 {
+      margin:0 0 8px;
+      font-size:clamp(20px,3vw,28px);
+      letter-spacing:.08em;
+    }
+
+    .portal-intro p {
+      margin:0 auto;
+      max-width:820px;
+      color:var(--muted);
+      line-height:1.8;
+      font-size:14px;
+    }
+
+    .fleet-section {
+      margin-top:10px;
+    }
+
+    .section-title {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin:18px 0 10px;
+      font-size:15px;
+      font-weight:800;
+      color:#ffe2a0;
+      letter-spacing:.08em;
+    }
+
+    .section-title::before {
+      content:"";
+      width:5px;
+      height:20px;
+      border-radius:3px;
+      background:var(--gold);
+      box-shadow:0 0 10px rgba(207,163,58,.45);
+    }
+
+    .guards {
+      display:grid;
+      grid-template-columns:repeat(6,minmax(0,1fr));
+      gap:10px;
+      margin:0;
+    }
+
+    .guard {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:9px 10px;
+      text-decoration:none;
+      text-align:center;
+      font-size:14px;
+      font-weight:650;
+      color:#fff;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:10px;
+      text-shadow:0 0 4px rgba(0,0,0,.6);
+      backdrop-filter:blur(3px);
+      box-shadow:0 2px 6px rgba(0,0,0,.3);
+      transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease;
+    }
+
+    .guard:hover {
+      background:rgba(207,163,58,.23);
+      border-color:rgba(255,220,130,.55);
+      transform:translateY(-2px);
+      box-shadow:0 7px 16px rgba(0,0,0,.35);
+    }
+
+    .guard.core { border-color:rgba(73,210,105,.35); }
+    .guard.ai { border-color:rgba(100,181,255,.35); }
+
+    .screens {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-top:22px;
+    }
+
+    .screen {
+      background:var(--screen);
+      border-radius:12px;
+      border:2px solid #2c3138;
+      box-shadow:0 10px 22px var(--shadow),inset 0 0 24px rgba(0,0,0,.6);
+      overflow:hidden;
+      position:relative;
+      min-height:390px;
+    }
+
+    .screen > header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:linear-gradient(180deg,#2a2f36,#1d2127);
+      border-bottom:1px solid #121417;
+      padding:8px 12px;
+      font-size:12px;
+    }
+
+    .screen > header .title {
+      opacity:.9;
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+
+    .light {
+      width:10px;
+      height:10px;
+      flex:0 0 10px;
+      border-radius:50%;
+      background:var(--green);
+      box-shadow:0 0 8px rgba(73,210,105,.68);
+    }
+
+    .screen iframe {
+      width:100%;
+      height:calc(100% - 35px);
+      min-height:355px;
+      border:0;
+      background:#fff;
+    }
+
+    .screen video {
+      display:block;
+      width:100%;
+      height:calc(100% - 35px);
+      min-height:355px;
+      object-fit:contain;
+      background:#000;
+    }
+
+    .fallback {
+      position:absolute;
+      inset:35px 0 0 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      text-align:center;
+      color:#ddd;
+      background:
+        repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 12px,rgba(0,0,0,.06) 12px 24px),
+        rgba(0,0,0,.78);
+    }
+
+    .fallback .box {
+      max-width:520px;
+      border:1px dashed rgba(255,255,255,.35);
+      border-radius:12px;
+      padding:18px;
+      background:rgba(0,0,0,.38);
+    }
+
+    .fallback a {
+      color:#7ec7ff;
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    .tv-controls {
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .tv-controls button,
+    .chat-send {
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:8px;
+      padding:7px 12px;
+      color:#fff;
+      background:rgba(0,0,0,.35);
+      cursor:pointer;
+    }
+
+    .tv-controls button:hover,
+    .chat-send:hover {
+      background:rgba(207,163,58,.25);
+    }
+
+    /* AI Chat Widget */
+    .chat-toggle {
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      z-index:1000;
+      width:58px;
+      height:58px;
+      border:2px solid #e3bd61;
+      border-radius:50%;
+      background:linear-gradient(145deg,#5f3914,#251707);
+      color:#ffe3a0;
+      font-size:25px;
+      cursor:pointer;
+      box-shadow:0 8px 25px rgba(0,0,0,.5),0 0 18px rgba(207,163,58,.25);
+    }
+
+    .chat-panel {
+      position:fixed;
+      right:22px;
+      bottom:92px;
+      z-index:999;
+      width:min(390px,calc(100vw - 28px));
+      height:min(540px,calc(100vh - 120px));
+      display:none;
+      flex-direction:column;
+      overflow:hidden;
+      border:1px solid rgba(255,220,130,.35);
+      border-radius:16px;
+      background:rgba(18,20,24,.97);
+      box-shadow:0 20px 50px rgba(0,0,0,.6);
+      backdrop-filter:blur(12px);
+    }
+
+    .chat-panel.open { display:flex; }
+
+    .chat-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:13px 15px;
+      background:linear-gradient(180deg,#302719,#1c1914);
+      border-bottom:1px solid rgba(255,255,255,.1);
+    }
+
+    .chat-head strong { color:#ffe0a0; }
+    .chat-close {
+      border:0;
+      background:transparent;
+      color:#aaa;
+      font-size:20px;
+      cursor:pointer;
+    }
+
+    .chat-messages {
+      flex:1;
+      overflow:auto;
+      padding:14px;
+    }
+
+    .msg {
+      max-width:88%;
+      margin:0 0 10px;
+      padding:9px 11px;
+      border-radius:11px;
+      font-size:14px;
+      line-height:1.6;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+
+    .msg.bot {
+      background:#252a31;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .msg.user {
+      margin-left:auto;
+      background:#57401d;
+      border:1px solid rgba(255,220,130,.18);
+    }
+
+    .chat-form {
+      display:flex;
+      gap:7px;
+      padding:10px;
+      border-top:1px solid rgba(255,255,255,.1);
+      background:#17191d;
+    }
+
+    .chat-input {
+      flex:1;
+      min-width:0;
+      resize:none;
+      border:1px solid #383e46;
+      border-radius:9px;
+      padding:9px 10px;
+      background:#0e1013;
+      color:#fff;
+      outline:none;
+    }
+
+    .chat-input:focus { border-color:#cfa33a; }
+
+    footer {
+      max-width:1400px;
+      width:100%;
+      margin:auto;
+      padding:16px 28px 22px;
+      font-size:12px;
+      color:#ddd;
+      opacity:.78;
+      line-height:1.7;
+    }
+
+    @media (max-width:1100px) {
+      .guards { grid-template-columns:repeat(4,minmax(0,1fr)); }
+    }
+
+    @media (max-width:800px) {
+      header.site-header { padding:18px 18px 8px; }
+      .castle-stage { padding:12px; }
+      .arch { padding:22px 14px; }
+      .portal-intro { padding:8px 12px 18px; }
+      .screens { grid-template-columns:1fr; }
+      .guards { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .banner { display:none; }
+      .torch.left { left:8px; }
+      .torch.right { right:8px; }
+    }
+
+    @media (max-width:480px) {
+      .crest { width:46px;height:46px;flex-basis:46px; }
+      .subtitle { font-size:12px; }
+      .guards { grid-template-columns:1fr 1fr; gap:8px; }
+      .guard { font-size:13px; min-height:44px; }
+      .chat-toggle { right:14px; bottom:14px; }
+      .chat-panel { right:14px; bottom:82px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wall">
+
+  <header class="site-header">
+    <img class="castle-logo" src="castlelogo.png" alt="Castle AI Logo">
+    <div>
+      <h1>古堡神盾艦 🏰 Castle AI Portal｜AI 園區總入口</h1>
+      <div class="subtitle">
+        AI × 知識庫 × 生圖 × 自動化工作平台
+        <br>
+        建立屬於自己的 AI 古堡，讓所有 AI 成為你的艦隊。
+      </div>
+      <div class="tagline">古堡艦・諾亞方舟・世外桃園・你登艦了嗎？</div>
+    </div>
+  </header>
+
+  <main class="castle-stage">
+    <div class="arch">
+      <div class="banner left" aria-hidden="true"></div>
+      <div class="banner right" aria-hidden="true"></div>
+      <div class="torch left" aria-hidden="true"></div>
+      <div class="torch right" aria-hidden="true"></div>
+
+      <div class="portal-intro">
+        <h2>⚔ 古堡艦隊入口矩陣 ⚔</h2>
+        <p>
+          這裡是古堡數位艦隊的總入口。
+          從身份、AI、生圖、知識庫、司法、股市、遊戲與開發工具，
+          一站登艦，前往各個數位領地。
+        </p>
+      </div>
+
+      <section class="fleet-section">
+        <div class="section-title">🏰 核心艦隊</div>
+        <div class="guards">
+          <a class="guard core" href="https://login.pk530.fun/" target="_blank" rel="noopener">🔐 古堡登艦區</a>
+          <a class="guard core" href="https://brain.pk530.fun/" target="_blank" rel="noopener">🧠 古堡中控</a>
+          <a class="guard core" href="https://ai.pk530.fun/" target="_blank" rel="noopener">🤖 AI 生態園區</a>
+          <a class="guard core" href="https://castleteam.pk530.fun/" target="_blank" rel="noopener">⚔️ 古堡艦隊</a>
+          <a class="guard core" href="https://git222.pk530.fun/" target="_blank" rel="noopener">💻 Gitea 程式盒子</a>
+          <a class="guard core" href="https://password.pk530.fun/" target="_blank" rel="noopener">🔒 古堡機密</a>
+        </div>
+
+        <div class="section-title">🎨 AI／創作艦隊</div>
+        <div class="guards">
+          <a class="guard ai" href="https://gallery.pk530.fun/" target="_blank" rel="noopener">🖼️ 古堡出圖機</a>
+          <a class="guard ai" href="https://talk.pk530.fun/" target="_blank" rel="noopener">💬 AI 會客室</a>
+          <a class="guard ai" href="https://shop.pk530.fun/" target="_blank" rel="noopener">🛒 AI 購物</a>
+          <a class="guard ai" href="https://game.pk530.fun/" target="_blank" rel="noopener">🎮 任天堂</a>
+          <a class="guard ai" href="https://28825252.sbs/" target="_blank" rel="noopener">🎬 古堡電影窗口</a>
+          <a class="guard ai" href="https://28825252.top/" target="_blank" rel="noopener">📚 古堡 VS 塔羅電子書</a>
+        </div>
+
+        <div class="section-title">📚 知識／專業艦隊</div>
+        <div class="guards">
+          <a class="guard" href="https://justice.pk530.fun/" target="_blank" rel="noopener">⚖️ 開封府申訴</a>
+          <a class="guard" href="https://stock.pk530.fun/" target="_blank" rel="noopener">📈 股市文師爺</a>
+          <a class="guard" href="https://tarot.pk530.fun/" target="_blank" rel="noopener">🔮 塔羅神域</a>
+          <a class="guard" href="https://life.pk530.fun/" target="_blank" rel="noopener">🌐 數位人生</a>
+          <a class="guard" href="https://liu.pk530.fun/" target="_blank" rel="noopener">👤 劉羽字個性專網</a>
+          <a class="guard" href="https://yesterday.pk530.fun/" target="_blank" rel="noopener">⌛ 前世金身</a>
+        </div>
+
+        <div class="section-title">🌿 個人／其他艦隊</div>
+        <div class="guards">
+          <a class="guard" href="https://pk530.fun/" target="_blank" rel="noopener">🌳 古堡花園</a>
+          <a class="guard" href="https://mj530.fun/" target="_blank" rel="noopener">📜 古堡密令</a>
+          <a class="guard" href="https://usb.pk530.fun/" target="_blank" rel="noopener">💾 by-usb</a>
+          <a class="guard" href="https://son.pk530.fun/" target="_blank" rel="noopener">🎂 Birthday</a>
+          <a class="guard" href="https://劉光益.pk530.fun/" target="_blank" rel="noopener">🩺 劉光益醫師專網</a>
+          <a class="guard" href="https://郭汶顯.pk530.fun/" target="_blank" rel="noopener">🩺 郭汶顯醫師專網</a>
+        </div>
+      </section>
+
+      <div class="screens">
+        <section class="screen" aria-label="每日站點輪播">
+          <header>
+            <span class="title">每日艦隊輪播載入中...</span>
+            <span class="light" aria-hidden="true"></span>
+          </header>
+
+          <iframe
+            src=""
+            title="古堡每日站點輪播"
+            allow="fullscreen; clipboard-read; clipboard-write"
+            referrerpolicy="no-referrer">
+          </iframe>
+
+          <div class="fallback">
+            <div class="box">
+              <p>⚠️ 無法直接在電視牆中嵌入 <strong id="siteName">站點</strong>。</p>
+              <p>站點可能啟用 X-Frame-Options / CSP。可以直接開啟站點：</p>
+              <p>
+                <a id="siteLink" href="#" target="_blank" rel="noopener">
+                  🚀 在新視窗登艦
+                </a>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen" aria-label="C3 影片">
+          <header>
+            <span class="title">foxokiso-C3.mp4｜C3 分流</span>
+            <span class="light" aria-hidden="true"></span>
+          </header>
+          <video controls autoplay loop muted playsinline>
+            <source src="foxokiso-C3-war.mp4" type="video/mp4">
+            您的瀏覽器不支援影片播放。
+          </video>
+        </section>
+      </div>
+
+      <div class="tv-controls">
+        <button type="button" id="prevSite">← 上一艦</button>
+        <button type="button" id="nextSite">下一艦 →</button>
+        <button type="button" id="openSite">🚀 外開目前站點</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    古堡艦・諾亞方舟・世外桃園・你登艦了嗎？
+    ｜ <a href="https://28825252.vip/" target="_blank" rel="noopener">28825252.vip</a>
+    ｜ Email: jetbomb2012@gmail.com
+  </footer>
+</div>
+
+<!-- AI Chat -->
+<button class="chat-toggle" id="chatToggle" aria-label="開啟古堡 AI Chat">🤖</button>
+
+<section class="chat-panel" id="chatPanel" aria-label="古堡 AI Chat">
+  <div class="chat-head">
+    <strong>🏰 古堡 AI Chat</strong>
+    <button class="chat-close" id="chatClose" aria-label="關閉">×</button>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot">
+      歡迎登艦。<br>
+      我是古堡 AI 助手。請問今天要前往哪一座數位領地？
+    </div>
+  </div>
+
+  <form class="chat-form" id="chatForm">
+    <textarea class="chat-input" id="chatInput" rows="2"
+      placeholder="輸入問題，Enter 送出..." aria-label="輸入問題"></textarea>
+    <button class="chat-send" type="submit">送出</button>
+  </form>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  /* 每日輪播站點 */
+  const sites = [
+    { name: 'AI Justice', url: 'https://aijustice-xdkmwyp4.manus.space/' },
+    { name: 'AI Justice 2', url: 'https://aijustice-favgtytr.manus.space/' },
+    { name: 'Whistleblow', url: 'https://whistleblow-jempds7s.manus.space/' },
+    { name: '爆料 Web', url: 'https://baoliaoweb-uuwdbfww.manus.space/' },
+    { name: 'Judicial AI', url: 'https://judicialai-d6ijkbbe.manus.space/' },
+    { name: 'Castle Rotat', url: 'https://castlerotat-xvmwcgpk.manus.space/' }
+  ];
+
+  const dayKey = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Taipei',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).format(new Date());
+
+  const dayNumber = Math.floor(
+    Date.UTC(
+      Number(dayKey.slice(0,4)),
+      Number(dayKey.slice(5,7)) - 1,
+      Number(dayKey.slice(8,10))
+    ) / 86400000
+  );
+
+  let siteIndex = ((dayNumber % sites.length) + sites.length) % sites.length;
+
+  const screen = document.querySelector('.screen[aria-label="每日站點輪播"]');
+  const iframe = screen.querySelector('iframe');
+  const title = screen.querySelector('.title');
+  const fallback = screen.querySelector('.fallback');
+  const siteName = document.getElementById('siteName');
+  const siteLink = document.getElementById('siteLink');
+
+  function loadSite(index) {
+    siteIndex = (index + sites.length) % sites.length;
+    const site = sites[siteIndex];
+
+    title.textContent = site.name + '｜' + site.url;
+    siteName.textContent = site.name;
+    siteLink.href = site.url;
+
+    fallback.style.display = 'none';
+
+    let loaded = false;
+    iframe.onload = function () {
+      loaded = true;
+      fallback.style.display = 'none';
+    };
+
+    iframe.src = site.url;
+
+    window.setTimeout(function () {
+      if (!loaded) fallback.style.display = 'flex';
+    }, 2500);
+  }
+
+  document.getElementById('prevSite').addEventListener('click', function () {
+    loadSite(siteIndex - 1);
+  });
+
+  document.getElementById('nextSite').addEventListener('click', function () {
+    loadSite(siteIndex + 1);
+  });
+
+  document.getElementById('openSite').addEventListener('click', function () {
+    window.open(sites[siteIndex].url, '_blank', 'noopener');
+  });
+
+  loadSite(siteIndex);
+
+  /* AI Chat UI
+     預設不硬編碼內網 API，避免公開網站直接暴露 192.168.x.x。
+     若日後提供公開 API，可把 API_BASE 改成公開 HTTPS API。
+  */
+  // 公開 AI API Gateway：Cloudflare → 222:8890 → 101:8080
+  // 未來若改用 28825252.xyz，只需修改這一行。
+  const API_BASE = 'https://28825252.pk530.fun';
+
+  const chatToggle = document.getElementById('chatToggle');
+  const chatPanel = document.getElementById('chatPanel');
+  const chatClose = document.getElementById('chatClose');
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
+  const chatMessages = document.getElementById('chatMessages');
+
+  function addMessage(text, type) {
+    const el = document.createElement('div');
+    el.className = 'msg ' + type;
+    el.textContent = text;
+    chatMessages.appendChild(el);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return el;
+  }
+
+  chatToggle.addEventListener('click', function () {
+    chatPanel.classList.toggle('open');
+    if (chatPanel.classList.contains('open')) chatInput.focus();
+  });
+
+  chatClose.addEventListener('click', function () {
+    chatPanel.classList.remove('open');
+  });
+
+  chatForm.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    addMessage(message, 'user');
+    chatInput.value = '';
+
+    const pending = addMessage('古堡 AI 思考中……', 'bot');
+
+    try {
+      const response = await fetch(API_BASE + '/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'test',
+          messages: [
+            { role: 'user', content: message }
+          ],
+          stream: false
+        })
+      });
+
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+
+      const data = await response.json();
+      const reply = data?.choices?.[0]?.message?.content;
+      const reasoning = data?.choices?.[0]?.message?.reasoning_content;
+      pending.textContent = reply || reasoning || 'AI 沒有回傳內容。';
+    } catch (error) {
+      pending.textContent =
+        'AI Chat 目前無法連線。\n請檢查公開 API、Cloudflare Tunnel 與 CORS 設定。';
+    }
+  });
+
+  chatInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      chatForm.requestSubmit();
+    }
+  });
+})();
+</script>
+</body>
+</html>
