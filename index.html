@@ -81,28 +81,19 @@
       box-shadow:0 4px 12px rgba(0,0,0,.28);
     }
 
-    .logo-stack {
-      width:98px;
-      flex:0 0 98px;
+    .decree-placement {
       display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:8px;
-    }
-
-    .logo-stack .castle-logo {
-      width:98px;
-      height:98px;
-      flex:0 0 auto;
+      justify-content:center;
+      margin:0 0 14px;
     }
 
     .decree-link {
       display:flex;
       align-items:center;
       justify-content:center;
-      width:100%;
-      min-height:34px;
-      padding:5px 8px;
+      width:min(220px,100%);
+      min-height:42px;
+      padding:7px 14px;
       border:1px solid rgba(255,220,130,.7);
       border-radius:8px;
       background:linear-gradient(180deg,rgba(92,62,20,.92),rgba(35,25,13,.94));
@@ -564,10 +555,7 @@
 <div class="wall">
 
   <header class="site-header">
-    <div class="logo-stack">
-      <img class="castle-logo" src="castlelogo.png" alt="Castle AI Logo">
-      <a class="decree-link" href="https://jetbomb2012.github.io/command/" target="_blank" rel="noopener">📜 看詔</a>
-    </div>
+    <img class="castle-logo" src="castlelogo.png" alt="Castle AI Logo">
     <div>
       <h1>古堡神盾艦 🏰 Castle AI Portal｜AI 園區總入口</h1>
       <div class="subtitle">
@@ -593,6 +581,10 @@
           從身份、AI、生圖、知識庫、司法、股市、遊戲與開發工具，
           一站登艦，前往各個數位領地。
         </p>
+      </div>
+
+      <div class="decree-placement">
+        <a class="decree-link" href="https://jetbomb2012.github.io/command/" target="_blank" rel="noopener">📜 看詔</a>
       </div>
 
       <section class="fleet-section">
