@@ -81,6 +81,46 @@
       box-shadow:0 4px 12px rgba(0,0,0,.28);
     }
 
+    .logo-stack {
+      width:98px;
+      flex:0 0 98px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+    }
+
+    .logo-stack .castle-logo {
+      width:98px;
+      height:98px;
+      flex:0 0 auto;
+    }
+
+    .decree-link {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:100%;
+      min-height:34px;
+      padding:5px 8px;
+      border:1px solid rgba(255,220,130,.7);
+      border-radius:8px;
+      background:linear-gradient(180deg,rgba(92,62,20,.92),rgba(35,25,13,.94));
+      color:#ffe2a0;
+      font-size:14px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-decoration:none;
+      box-shadow:0 3px 10px rgba(0,0,0,.35),0 0 10px rgba(207,163,58,.22);
+      white-space:nowrap;
+    }
+
+    .decree-link:hover {
+      background:linear-gradient(180deg,rgba(130,91,28,.98),rgba(62,43,18,.98));
+      border-color:#ffe2a0;
+      transform:translateY(-1px);
+    }
+
     .crest {
       width:56px;
       height:56px;
@@ -524,7 +564,10 @@
 <div class="wall">
 
   <header class="site-header">
-    <img class="castle-logo" src="castlelogo.png" alt="Castle AI Logo">
+    <div class="logo-stack">
+      <img class="castle-logo" src="castlelogo.png" alt="Castle AI Logo">
+      <a class="decree-link" href="https://jetbomb2012.github.io/command/" target="_blank" rel="noopener">📜 看詔</a>
+    </div>
     <div>
       <h1>古堡神盾艦 🏰 Castle AI Portal｜AI 園區總入口</h1>
       <div class="subtitle">
@@ -561,7 +604,6 @@
           <a class="guard core" href="https://castleteam.28825252.xyz/" target="_blank" rel="noopener">⚔️ 古堡艦隊</a>
           <a class="guard core" href="https://git222.28825252.xyz/" target="_blank" rel="noopener">💻 Gitea 程式盒子</a>
           <a class="guard core" href="https://password.28825252.xyz/" target="_blank" rel="noopener">🔒 古堡機密</a>
-          <a class="guard core" href="https://jetbomb2012.github.io/command/" target="_blank" rel="noopener">📜 看詔</a>
         </div>
 
         <div class="section-title">🎨 AI／創作艦隊</div>
